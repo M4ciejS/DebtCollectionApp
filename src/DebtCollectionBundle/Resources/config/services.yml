@@ -1,0 +1,4 @@
+services:
+#    debt_collection.example:
+#        class: DebtCollectionBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

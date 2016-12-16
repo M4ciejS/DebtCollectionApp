@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Debtcase edit</h1>
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+    {% if debtCase.hasDocuments() %}
+        <table class="table">
+        <tr>
+            <th colspan="3">Documents</th>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <th>Creation Date</th>
+            <th>Payment date</th>
+            <th>Amount</th>
+            <th>Delete</th>
+        </tr>
+        {% for document in debtCase.documents %}
+            <tr>
+                <td><a href="{{ path('debtcasedocument_edit', { 'id': document.id }) }}">{{ document.identificationCode }}</a></td>
+                <td>{{ document.creationDate|date('Y-m-d') }}</td>
+                <td>{{ document.paymentDate|date('Y-m-d') }}</td>
+                <td>{{ document.amount }}</td>
+                <td>{{ form(document_delete_forms[document.id]) }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+    <div class="btn-group" role="group" aria-label="...">
+        <a class="btn btn-default" href="{{ path('debtcasedocument_add_document', { 'id': debtCase.id }) }}">Add Document</a>
+        <a class="btn btn-default" href="{{ path('debtcase_index') }}">Back to the list</a>
+    </div>
+
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger"type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+
+{% endblock %}

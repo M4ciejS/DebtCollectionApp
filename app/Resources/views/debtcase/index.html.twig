@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Debtcases list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Identificationcode</th>
+                <th>Creationdate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for debtCase in debtCases %}
+            <tr>
+                <td><a href="{{ path('debtcase_show', { 'id': debtCase.id }) }}">{{ debtCase.identificationCode }}</a></td>
+                <td>{% if debtCase.creationDate %}{{ debtCase.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('debtcase_show', { 'id': debtCase.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('debtcase_edit', { 'id': debtCase.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+
+        {% endfor %}
+        <tr>
+            <td><a class="btn btn-default" href="{{ path('debtcase_new') }}">Create a new debtCase</a></td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

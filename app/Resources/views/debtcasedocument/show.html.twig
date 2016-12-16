@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Debtcasedocument</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>DebtCase number:</th>
+                <td>{{ debtCaseDocument.debtCase.identificationCode }}</td>
+            </tr>
+            <tr>
+                <th>Identificationcode</th>
+                <td>{{ debtCaseDocument.identificationCode }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{% if debtCaseDocument.creationDate %}{{ debtCaseDocument.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Paymentdate</th>
+                <td>{% if debtCaseDocument.paymentDate %}{{ debtCaseDocument.paymentDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ debtCaseDocument.amount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('debtcase_show',{ 'id': debtCaseDocument.debtCase.id }) }}">Back to debtcase</a>
+        </li>
+        <li>
+            <a href="{{ path('debtcasedocument_edit', { 'id': debtCaseDocument.id }) }}">Edit</a>
+        </li>
+        <li>
+            <a href="{{ path('debtcasedocument_add_document', { 'id': debtCaseDocument.debtCase.id }) }}">Add DebtCase Document</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Debtcasedocuments list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Identificationcode</th>
+                <th>Creationdate</th>
+                <th>Paymentdate</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for debtCaseDocument in debtCaseDocuments %}
+            <tr>
+                <td><a href="{{ path('debtcasedocument_show', { 'id': debtCaseDocument.id }) }}">{{ debtCaseDocument.id }}</a></td>
+                <td>{{ debtCaseDocument.identificationCode }}</td>
+                <td>{% if debtCaseDocument.creationDate %}{{ debtCaseDocument.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if debtCaseDocument.paymentDate %}{{ debtCaseDocument.paymentDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ debtCaseDocument.amount }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('debtcasedocument_show', { 'id': debtCaseDocument.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('debtcasedocument_edit', { 'id': debtCaseDocument.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('debtcasedocument_new') }}">Create a new debtCaseDocument</a>
+        </li>
+    </ul>
+{% endblock %}

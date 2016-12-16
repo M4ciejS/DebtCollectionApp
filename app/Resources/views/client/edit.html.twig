@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Client edit</h1>
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <input type="submit" value="Edit"/>
+    {{ form_end(edit_form) }}
+    {% if client.hasAddressess %}
+        <table class="table">
+            <tr>
+                <th>Addresses</th>
+            </tr>
+            <tr>
+                <th>Street</th>
+                <th>Postalcode</th>
+                <th>City</th>
+                <th>Edit</th>
+            </tr>
+            {% for address in client.addresses %}
+                <tr>
+                    <td>{{ address.street }}</td>
+                    <td>{{ address.postalCode }}</td>
+                    <td>{{ address.city }}</td>
+                    <td><a href="{{ path('address_edit',{'id':address.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if client.hasContacts %}
+        <table class="table">
+            <tr>
+                <th>Contacts</th>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Edit</th>
+            </tr>
+            {% for contact in client.contacts %}
+                <tr>
+                    <td>{{ contact.contact }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.type }}</td>
+                    <td><a href="{{ path('contact_edit',{'id':contact.id}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <div class="btn-group" role="group" aria-label="...">
+        <a class="btn btn-default" href="{{ path('client_index') }}" role="button">Back to list</a>
+        <a class="btn btn-default" href="{{ path('address_new',{'id':client.id}) }}" role="button">Add Address</a>
+        <a class="btn btn-default" href="{{ path('contact_new',{'id':client.id}) }}" role="button">Add Contact</a>
+    </div>
+    {{ form(delete_form) }}
+{% endblock %}

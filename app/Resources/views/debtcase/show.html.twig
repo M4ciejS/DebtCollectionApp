@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Debtcase</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <th>Identificationcode</th>
+            <th>Creationdate</th>
+            <th>Creditor</th>
+            <th>Debtor</th>
+        </tr>
+        <tr>
+            <td>{{ debtCase.id }}</td>
+            <td>{{ debtCase.identificationCode }}</td>
+            <td>{% if debtCase.creationDate %}{{ debtCase.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td><a href="{{ path('client_show',{'id':debtCase.creditor.id}) }}">{{ debtCase.creditor.name }}</a></td>
+            <td><a href="{{ path('client_show',{'id':debtCase.debtor.id}) }}">{{ debtCase.debtor.name }}</a></td>
+        </tr>
+        {% if debtCase.hasDocuments() %}
+            <tr>
+                <th colspan="4">Documents</th>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <th>Creation Date</th>
+                <th>Payment date</th>
+                <th>Amount</th>
+            </tr>
+            {% for document in debtCase.documents %}
+                <tr>
+                    <td>
+                        {{ document.identificationCode }}
+                    </td>
+                    <td>{{ document.creationDate|date('Y-m-d') }}</td>
+                    <td>{{ document.paymentDate|date('Y-m-d') }}</td>
+                    <td>{{ document.amount }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <div class="btn-group" role="group" aria-label="...">
+        <a class="btn btn-default" href="{{ path('debtcase_index') }}">Back to the list</a>
+        <a class="btn btn-default" href="{{ path('debtcase_edit', { 'id': debtCase.id }) }}">Edit</a>
+        <a class="btn btn-default" href="{{ path('debtcasedocument_add_document', { 'id': debtCase.id }) }}">Add
+            Document</a>
+    </div>
+{% endblock %}
