@@ -63,6 +63,9 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: DebtCollectionBundle\Entity\User
+    registration:
+            form:
+                type: DebtCollectionBundle\Form\RegistrationType
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
