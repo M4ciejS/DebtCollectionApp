@@ -39,14 +39,14 @@ class DebtCaseDocument
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creationDate", type="datetime")
+     * @ORM\Column(name="creationDate", type="date")
      */
     private $creationDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="paymentDate", type="datetime")
+     * @ORM\Column(name="paymentDate", type="date")
      */
     private $paymentDate;
 

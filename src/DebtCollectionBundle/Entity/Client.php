@@ -2,6 +2,7 @@
 
 namespace DebtCollectionBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -35,12 +36,12 @@ class Client
      */
     private $contacts;
     /**
-     * @var
+     * @var Collection
      * @ORM\OneToMany(targetEntity="DebtCase",mappedBy="debtor")
      */
     private $debtorCases;
     /**
-     * @var
+     * @var Collection
      * @ORM\OneToMany(targetEntity="DebtCase",mappedBy="creditor")
      */
     private $creditorCases;
@@ -55,7 +56,7 @@ class Client
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,7 +79,7 @@ class Client
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -101,12 +102,13 @@ class Client
     /**
      * Get identificationCode
      *
-     * @return string 
+     * @return string
      */
     public function getIdentificationCode()
     {
         return $this->identificationCode;
     }
+
     /**
      * Constructor
      */
@@ -141,7 +143,7 @@ class Client
     /**
      * Get debtCases
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDebtCases()
     {
@@ -174,7 +176,7 @@ class Client
     /**
      * Get debtorCases
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDebtorCases()
     {
@@ -207,7 +209,7 @@ class Client
     /**
      * Get creditorCases
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCreditorCases()
     {
@@ -218,11 +220,12 @@ class Client
      * @return bool
      */
     public function hasCases(){
-       if((count($this->creditorCases)>0)||(count($this->debtCases)>0)){
-           return true;
-       }
-       return false;
+        if ((count($this->creditorCases) > 0) || (count($this->debtorCases) > 0)) {
+            return true;
+        }
+        return false;
     }
+
     /**
      * Add addresses
      *
@@ -249,7 +252,7 @@ class Client
     /**
      * Get addresses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAddresses()
     {
@@ -265,6 +268,7 @@ class Client
         }
         return false;
     }
+
     /**
      * Add contacts
      *
@@ -291,12 +295,13 @@ class Client
     /**
      * Get contacts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getContacts()
     {
         return $this->contacts;
     }
+
     public function hasContacts(){
         if(count($this->contacts)>0){
             return true;
