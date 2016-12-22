@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: m4ciej
- * Date: 21.12.16
- * Time: 19:28
+ * Date: 22.12.16
+ * Time: 17:05
  */
 
 namespace DebtCollectionBundle\Form;
@@ -18,20 +18,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class UserNewType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username')
-            ->add('plainpassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => array('attr' => array('class' => 'password-field')),
-                'required' => true,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))
             ->add('email')
             ->add('roles', CollectionType::class, array(
                 'entry_type' => RoleType::class,

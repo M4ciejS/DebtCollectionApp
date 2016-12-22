@@ -12,9 +12,13 @@ namespace DebtCollectionBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @Assert\Callback({"DebtCollectionBundle\Validator\UserValidator", "validate"})
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User extends BaseUser
 {
@@ -35,6 +39,11 @@ class User extends BaseUser
      */
     protected $username;
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDate;
+    /**
      * @var
      * @Assert\Length(
      *     min = 8,
@@ -44,14 +53,35 @@ class User extends BaseUser
      * )
      */
     protected $plainPassword;
-    /**
-     * @var array
-     * @Assert\Choice({"ROLE_USER", "ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
-     */
     protected $roles;
     public function __construct()
     {
         parent::__construct();
 
     }
+
+    public function setCreationDate(\DateTime $date)
+    {
+        $this->creationDate = $date;
+    }
+
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+    /*public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if(isset($this->roles)){
+            unset($this->roles);
+        }
+        $this->roles[0]=$role;
+        return $this;
+    }
+    public function setRoles(array $roles)
+    {
+        $this->roles = array();
+        $this->addRole($roles[0]);
+        return $this;
+    }*/
 }
