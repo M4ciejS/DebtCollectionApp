@@ -27,7 +27,7 @@ class ClientController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $clients = $em->getRepository('DebtCollectionBundle:Client')->findAll();
+        $clients = $em->getRepository('DebtCollectionBundle:Client')->findBy(array(), array(), 5, 0);
 
         return $this->render('client/index.html.twig', array(
             'clients' => $clients,
