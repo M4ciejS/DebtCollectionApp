@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * })
  * @ORM\Entity(repositoryClass="DebtCollectionBundle\Repository\DebtCaseRepository")
  * @UniqueEntity("identificationCode")
+ * @Assert\Callback({"DebtCollectionBundle\Validator\DebtCaseValidator", "validate"})
  */
 class DebtCase
 {
@@ -33,8 +34,9 @@ class DebtCase
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="identificationCode", type="string", length=255,unique=true)
+     * @TODO change this to class/interface to enforce patterns and implement search
      */
     private $identificationCode;
 

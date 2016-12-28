@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ErrorControler
  * @package DebtCollectionBundle\Controller
- * @Route("/error")
+ * @Route("error")
  */
 class ErrorControler extends Controller
 {

@@ -16,6 +16,9 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="{{ path('client_index') }}">Client</a></li>
                 <li><a href="{{ path('debtcase_index') }}">Debt Case</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('user_index') }}">Users</a>
+                    {% endif %}
             </ul>
             {% if is_granted('ROLE_USER') %}
             <ul class="nav navbar-nav navbar-right">
@@ -24,6 +27,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ logout_path('main') }}">Logout</a></li>
                         <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Edit</a></li>
+                        <li><a href="{{ path('fos_user_change_password') }}">Change password</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
