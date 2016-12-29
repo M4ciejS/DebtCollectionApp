@@ -8,3 +8,9 @@ services:
         class: DebtCollectionBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: debtcollection_user_registration }
+    debtcollection.user.roles:
+        class: DebtCollectionBundle\Model\RoleHelper
+        arguments: ['%roles%']
+    debtcollection.user.form.roles:
+        class: DebtCollectionBundle\Form\Type\RoleType
+        arguments: ['%roles%']

@@ -53,11 +53,14 @@ class User extends BaseUser
      * )
      */
     protected $plainPassword;
+    /**
+     * @var array
+     *
+     */
     protected $roles;
     public function __construct()
     {
         parent::__construct();
-
     }
 
     public function setCreationDate(\DateTime $date)
@@ -69,19 +72,44 @@ class User extends BaseUser
     {
         return $this->creationDate;
     }
-    /*public function addRole($role)
-    {
-        $role = strtoupper($role);
-        if(isset($this->roles)){
-            unset($this->roles);
-        }
-        $this->roles[0]=$role;
-        return $this;
-    }
     public function setRoles(array $roles)
     {
-        $this->roles = array();
-        $this->addRole($roles[0]);
+        $this->roles = $roles;
+        /*
+                foreach ($roles as $role) {
+                    $this->addRole($role);
+                }
+        */
         return $this;
-    }*/
+    }
+
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the user roles
+     *
+     * @return array The roles
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+
+        foreach ($this->getGroups() as $group) {
+            $roles = array_merge($roles, $group->getRoles());
+        }
+
+        // we need to make sure to have at least one role
+        //$roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
 }

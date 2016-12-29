@@ -46,7 +46,6 @@ class DebtCase
      * @ORM\Column(name="creationDate", type="datetime")
      */
     private $creationDate ;
-
     /**
      * @var string
      * @Assert\NotNull()

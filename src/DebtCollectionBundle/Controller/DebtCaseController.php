@@ -4,6 +4,7 @@ namespace DebtCollectionBundle\Controller;
 
 use DebtCollectionBundle\Entity\Client;
 use DebtCollectionBundle\Entity\DebtCase;
+use DebtCollectionBundle\Entity\DebtCaseUserPermisson;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Button;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Debtcase controller.
@@ -44,16 +46,20 @@ class DebtCaseController extends Controller
      */
     public function newAction(Request $request)
     {
+        /**
+         * @TODO to jest nienajlepsze roziwazanie,przeniesc gdzies ten kod...
+         */
         $debtCase = new Debtcase();
         $form = $this->createForm('DebtCollectionBundle\Form\DebtCaseType', $debtCase);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $debtCaseUserPermission = new DebtCaseUserPermisson($this->getUser(), $debtCase, ['o', 'r', 'w']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($debtCase);
+            $em->persist($debtCaseUserPermission);
             $em->flush($debtCase);
-
             return $this->redirectToRoute('debtcase_show', array('id' => $debtCase->getId()));
+
         }
 
         return $this->render('debtcase/new.html.twig', array(
@@ -88,21 +94,20 @@ class DebtCaseController extends Controller
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-                $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('debtcase_edit', array('id' => $debtCase->getId()));
+            return $this->redirectToRoute('debtcase_edit', array('id' => $debtCase->getId()));
 
         }
-        $debbCaseDocumentDeleteForms=[];
-        if($debtCase->hasDocuments()){
-            foreach($debtCase->getDocuments() as $v){
-                $debbCaseDocumentDeleteForms[$v->getId()]=$this->createFormBuilder()
+        $debbCaseDocumentDeleteForms = [];
+        if ($debtCase->hasDocuments()) {
+            foreach ($debtCase->getDocuments() as $v) {
+                $debbCaseDocumentDeleteForms[$v->getId()] = $this->createFormBuilder()
                     ->setAction($this->generateUrl('debtcasedocument_delete', array('id' => $v->getId())))
                     ->setMethod('DELETE')
                     ->add('Delete', SubmitType::class, array(
                         'attr' => array('class' => 'btn btn-danger')))
-                    ->getForm()->createView()
-                    ;
+                    ->getForm()->createView();
 
             }
         }
@@ -146,7 +151,6 @@ class DebtCaseController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('debtcase_delete', array('id' => $debtCase->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

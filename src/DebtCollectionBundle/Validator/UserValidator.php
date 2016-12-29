@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UserValidator
 {
+
     /**
      * @param User $user
      * @param ExecutionContextInterface $context
@@ -24,6 +25,7 @@ class UserValidator
          * @TODO change this to use parameters
          */
         $roles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+        var_dump($roles);
         if (!in_array($user->getRoles()[0], $roles)) {
             $context->buildViolation('Unsupported role!' . $user->getRoles()[0])
                 ->atPath('Roles')

@@ -20,6 +20,6 @@ parameters:
     #My paramaters
     #Role constants
     roles:
-        u: ROLE_USER
-        a: ROLE_ADMIN
-        s: ROLE_SUPER_ADMIN
+        user: ROLE_USER
+        admin: ROLE_ADMIN
+        superadmin: ROLE_SUPER_ADMIN
